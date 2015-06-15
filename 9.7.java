@@ -1,136 +1,71 @@
-<<<<<<< HEAD
-public class HtWt implements Comparable<Object> {
-	int ht;
-	int wt;
+Circus. Given heights and weights of each person, find largest possible number of people in such a tower
 
-	public HtWt(int ht, int wt) {
-		this.ht = ht;
-		this.wt = wt;
+Sort the list of people by their heights, and then apply the LongestIncreasingSubsequence algorithm on their weights
+
+
+public List<HtWt> getIncreasingSequence(List<HtWt> items) {
+	Collections.sort(items);
+	return longestIncreasingSubsequence(items);
+}
+
+public void List<HtWt> longestIncreasingSubsequence(List<HtWt> array) {
+	List<HtWt>[] solutions = new ArrayList[array.size()];
+	longestIncreasingSubsequence(array, solutions, 0);
+
+	List<HtWt> best_sequence = null;
+	for(int i=0; i<array.size(); i++)
+		best_sequence = seqWithMaxLength(best_sequence, solutions[i]);
+	return best_sequence;
+}
+
+public void longestIncreasingSubsequence(List<HtWt> array, List<HtWt>[] solutions, int current_index) {
+	if(current_index>=array.size() || current_index<0)
+		return;
+	HtWt current_element = array.get(current_index);
+
+	//Find longest sequence we can append current_element to
+	List<HtWt> best_sequence = null;
+	for(int i=0; i<current_index; i++) {
+		if(array.get(i).isBefore(current_element)) {
+			best_sequence = seqWithMaxLength(best_sequence, solutions[i]);
+		}
 	}
 
-	public boolean isBefore(HtWt htwt) {
-		return (this.ht < htwt.ht && this.wt < htwt.wt);
-	}
+	//Append current_element
+	List<HtWt> new_solution = new ArrayList<HtWt>();
+	if(best_sequence!=null)
+		new_solution.addAll(best_sequence);
+	new_solution.add(current_element);
 
-	public int compareTo(Object o) {
-		HtWt h = (HtWt)o;
-		return this.ht!=h.ht ? this.ht.compareTo(h.ht) : this.wt.compareTo(h.wt);
+	//Add to list and recurse
+	solutions[current_index] = new_solution;
+	longestIncreasingSubsequence(array, solutions, current_index+1);
+}
+
+public void List<HtWt> seqWithMaxLength(List<HtWt> seq1, List<HtWt> seq2) {
+	if(seq1==null)
+		return seq2;
+	if(seq2==null)
+		return seq1;
+	return seq1.size()>seq2.size()?seq1:seq2;
+}
+
+
+public class HtWt implements Comparable {
+	public int compareTo(Object s) {
+		HtWt second = (HtWt)s;
+		if(this.Ht!=second.Ht)
+			return ((Integer)this.Ht).compareTo(second.Ht);
+		else
+			return ((Integer)this.Wt).compareTo(second.Wt);
 	}
 }
 
-public class Solution {
-	
-	private ArrayList<HtWt> max;
 
-	public ArrayList<HtWt> maxSeq(ArrayList<HtWt> seq1, ArrayList<HtWt> seq2) {
-		return seq1.size() > seq2.size() ? seq1:seq2;
-	}
-
-	public int findNextUnfit(int start, ArrayList<HtWt> originalSeq, ArrayList<HtWt> subSeq) {
-		
-		int firstUnfit = start;
-
-		if(start<originalSeq.size())
-		{
-			for(int i=start; i<originalSeq.size(); i++)		//
-			{
-				if(i==start || originalSeq.get(i-1).isBefore(originalSeq.get(i)))	//
-					subSeq.add(item);
-				else
-					firstUnfit = i;		//如果出现不符合顺序的话记录下第一次出现的位置 然后还要继续循环因为后面的值可能还符合顺序 所以也要加到seq中
-			}
-		}
-		return firstUnfit;
-	}
-
-	public void findMaxSeq(ArrayList<HtWt> originalSeq) {
-		
-		//Collections.sort(originalSeq);
-		int currUnfit = 0;
-		
-		while(currUnfit<originalSeq.size())
-		{
-			ArrayList<HtWt> subSeq = new ArrayList<HtWt>();
-			int nextUnfit = findNextUnfit(currUnfit, originalSeq， subSeq);	//得到第一次unfit的位置
-			
-			max = maxSeq(max, subSeq);
-			
-			currUnfit = nextUnfit;	//
-		}
-		return max;
-	}
+public boolean isBefore(HtWt other) {
+	if(this.Ht < other.Ht && this.Wt < other.Wt)
+		return true;
+	return false;
 }
 
-Note: 这题我跟答案有些不同 不理解答案为什么那么写 看我自己写的程序 Circus.java, CircusTest.java, HtWt.java
-
-顺便看下LIS问题的求解 
-
-=======
-public class HtWt implements Comparable<Object> {
-	int ht;
-	int wt;
-
-	public HtWt(int ht, int wt) {
-		this.ht = ht;
-		this.wt = wt;
-	}
-
-	public boolean isBefore(HtWt htwt) {
-		return (this.ht < htwt.ht && this.wt < htwt.wt);
-	}
-
-	public int compareTo(Object o) {
-		HtWt h = (HtWt)o;
-		return this.ht!=h.ht ? this.ht.compareTo(h.ht) : this.wt.compareTo(h.wt);
-	}
-}
-
-public class Solution {
-	
-	private ArrayList<HtWt> max;
-
-	public ArrayList<HtWt> maxSeq(ArrayList<HtWt> seq1, ArrayList<HtWt> seq2) {
-		return seq1.size() > seq2.size() ? seq1:seq2;
-	}
-
-	public int findNextUnfit(int start, ArrayList<HtWt> originalSeq, ArrayList<HtWt> subSeq) {
-		
-		int firstUnfit = start;
-
-		if(start<originalSeq.size())
-		{
-			for(int i=start; i<originalSeq.size(); i++)		//
-			{
-				if(i==start || originalSeq.get(i-1).isBefore(originalSeq.get(i)))	//
-					subSeq.add(item);
-				else
-					firstUnfit = i;		//如果出现不符合顺序的话记录下第一次出现的位置 然后还要继续循环因为后面的值可能还符合顺序 所以也要加到seq中
-			}
-		}
-		return firstUnfit;
-	}
-
-	public void findMaxSeq(ArrayList<HtWt> originalSeq) {
-		
-		//Collections.sort(originalSeq);
-		int currUnfit = 0;
-		
-		while(currUnfit<originalSeq.size())
-		{
-			ArrayList<HtWt> subSeq = new ArrayList<HtWt>();
-			int nextUnfit = findNextUnfit(currUnfit, originalSeq， subSeq);	//得到第一次unfit的位置
-			
-			max = maxSeq(max, subSeq);
-			
-			currUnfit = nextUnfit;	//
-		}
-		return max;
-	}
-}
-
-Note: 这题我跟答案有些不同 不理解答案为什么那么写 看我自己写的程序 Circus.java, CircusTest.java, HtWt.java
-
-顺便看下LIS问题的求解 
-
->>>>>>> 231aada596112e7d62583bef1b008ea64f59cfb7
-http://stackoverflow.com/questions/2631726/how-to-determine-the-longest-increasing-subsequence-using-dynamic-programming
+O(n^2)

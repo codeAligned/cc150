@@ -1,0 +1,30 @@
+Explain what object reflection is in Java and why it is useful
+
+Object Reflection is a feature in Java which provides a way to get reflective information about Java classes and objects,
+and perform operations such as
+1 Getting information about the methods and fields present inside the class at runtime.
+
+2 Creating a new instance of a class
+
+3 Getting and setting the object fields directly by getting field reference, regardless of what the access modifier is.
+
+
+Object[] doubleArgs = new Object[]{4.2, 3.9};
+
+Class rectangleDefinition = Class.forName("MyProj.Rectangle");
+
+Class[] doubleArgsClass = new Class[] {double.class, double.class};
+
+/* Equivalent: Rectangle rectangle = new Rectangle(4.2, 3.9)*/
+Constructor doubleArgsConstructor = rectangleDefinition.getConstructor(doubleArgsClass);
+Rectangle rectangle = (Rectangle) doubleArgsConstructor.newInstance(doubleArgs);
+
+/* Equivalent: Double area = rectangle.area() */
+Method m = rectangleDefinition.getDeclaredMethod("area");
+Double are = (Double)m.invoke(rectangle);
+
+
+Why reflection is useful?
+1 it helps in observing or manipulating the runtime behavior of applications
+2 it can help in debugging or testing programs, as we have direct access to methods, constructors, and fields
+3 We can call methods by name when we dont know the method in advance.

@@ -31,4 +31,35 @@ public abstract class Shape {
 	public void printMe() {
 		System.out.println("I am a shape");
 	}
+	public abstract double computeArea();
 }
+
+public class Circle extends Shape {
+	private double rad = 5;
+	public void printMe() {
+		System.out.println("I am a circle.");
+	}
+
+	public double computeArea() {
+		return rad * rad * 3.14;
+	}
+}
+
+
+Collection Framework
+ArrayList vs. Vector
+A vector is similar to ArrayList except it is synchronized
+
+LinkedList
+LinkedList<String> myLinkedList = new LinkedList<String>();
+myLinkedList.add("two");
+myLinkedList.addFirst("one");
+Iterator<String> iter = myLinkedList.iterator();
+while(iter.hasNext())
+	System.out.println(iter.next());
+
+
+HashMap
+
+
+Additional Questions: 1.4, 8.10, 16.3

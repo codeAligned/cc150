@@ -1,9 +1,8 @@
+Imagine you have a 20GB file with one string per line. Explain how you would sort the file
+
 external sort
 
-divide the file into k chunks where X * K = 2GB
+divide the file into chunks which are x megabytes each, where x is the amount of memory we have available.
+Each chunk is sorted separately and then saved back to the file system.
 
-bring each chunk into memory sort each one using O(nlogn) algorithm. save lines back to file
-
-bring next one
-
-once we've done, merge them one by one (see leetcode merge k sorted list)
+Once all the chunks are sorted, merge the chunks, one by one. At the end, we have a fully sorted file.
