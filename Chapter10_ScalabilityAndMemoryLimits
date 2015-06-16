@@ -1,0 +1,35 @@
+Scalability and Memory Limits
+
+Hard Drive Space
+Memory
+Internet Transfer Latency
+
+Dividing up lots of Data
+Though we can sometimes increase hard drive space in a computer there comes a point where data simply must be divided
+up across machines. The question, is what data belongs on which machine?
+
+1 By Order of Appearance
+Simply divide up data by order of appearance. As new data comes in we wait for current machine to fill up before adding an
+additional machine. This has the advantage of never using more machines than are necessary. However, our lookup table maybe
+more complex and potentially very large.
+
+2 By Hash Value:
+Store data on the machine corresponding to the hash value of the data. More specifically,
+1 Pick some sort of key relating to the data
+2 Hash the key
+3 Mod the hash value by the number of machines
+4 Store the data on the machine with that value. That is, the data is stored on machine #[mod(hash(key), N)]
+
+Nice thing is that there is no need for a lookup table. Every machine know where a piece of data is. The problem is that a
+machine may get more data and eventually exceed its capacity. In this case, we may need to either shift data around the other
+machines for better load balancing, or split this machine's data into two machines
+
+3 By Actual value
+Suppose design a social network, someone living in Mexico will probably have a lot more friends from Mexico than an average
+Russian citizen. Store similar data on the same machine so looking up the Mexican person's friends requires fewer machine loops.
+
+4 Arbitrarily
+
+
+
+Example: Find all documents that contains a list of words
