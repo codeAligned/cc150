@@ -1,52 +1,22 @@
-<<<<<<< HEAD
-public boolean isAnagram(String s1, String s2) {
-	return Arrays.sort(s1.toCharArray())==Arrays.sort(s2.toCharArray());
-}
+lintcode space replacement
 
-
-public boolean isAnagram(String s1, String s2) {
-	if(s=="" || t=="")
-		return false;
-	if(s1.length()!=s2.length())
-		return false;
-
-	int[] check = new int[256];
-	for(int i=0; i<s1.length(); i++)
-	{
-		check[(int)(s1.charAt[i])]++;
-		check[(int)(s2.charAt[i])]--;
+public void replaceSpaces(char[] str, int length) {
+	int spaceCount = 0, len = 0;
+	for(i=0; i<length; i++) {
+		if(str[i]==' ')
+			spaceCount++;
 	}
-
-	for(int i=0; i<256; i++)
-		if(check[i]!=0)
-			return false;
-	return true;
-}
-
-=======
-public boolean isAnagram(String s1, String s2) {
-	return Arrays.sort(s1.toCharArray())==Arrays.sort(s2.toCharArray());
-}
-
-
-public boolean isAnagram(String s1, String s2) {
-	if(s=="" || t=="")
-		return false;
-	if(s1.length()!=s2.length())
-		return false;
-
-	int[] check = new int[256];
-	for(int i=0; i<s1.length(); i++)
-	{
-		check[(int)(s1.charAt[i])]++;
-		check[(int)(s2.charAt[i])]--;
+	int newLength = length + spaceCount*2 - 1;
+	for(int i=length-1; i>=0; i--) {
+		if(str[i]==' ') {
+			str[newLength] = '0';
+			str[newLength-1] = '2';
+			str[newLength-2] = '%';
+			newLength-=3;
+		}
+		else {
+			str[newLength] = str[i];
+			newLength--;
+		}
 	}
-
-	for(int i=0; i<256; i++)
-		if(check[i]!=0)
-			return false;
-	return true;
 }
-
->>>>>>> 231aada596112e7d62583bef1b008ea64f59cfb7
-Note: 第二种解法很妙

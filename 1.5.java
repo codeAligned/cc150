@@ -1,56 +1,47 @@
-<<<<<<< HEAD
-public void replaceSpace(char[] str, int length) {
-	
-	int spaceCount = 0;
-
-	for(int i=0; i<length; i++)
-		if(str[i]==' ')
-			spaceCount++;
-
-	int newLength = length + 2*spaceCount;
-	char[] newStr = new char[newLength];
-
-	for(int i=length-1; i>=0; i--)
-	{
-		if(str[i]==' ')
-		{
-			newStr[newLength-1] = '0';
-			newStr[newLength-2] = '2';
-			newStr[newLength-3] = '%';
-			newLength-=3;
-		}
-		else
-		{
-			newStr[newLength-1] = str[i];
-			newLength--;
-		}
-	}
-=======
-public void replaceSpace(char[] str, int length) {
-	
-	int spaceCount = 0;
-
-	for(int i=0; i<length; i++)
-		if(str[i]==' ')
-			spaceCount++;
-
-	int newLength = length + 2*spaceCount;
-	char[] newStr = new char[newLength];
-
-	for(int i=length-1; i>=0; i--)
-	{
-		if(str[i]==' ')
-		{
-			newStr[newLength-1] = '0';
-			newStr[newLength-2] = '2';
-			newStr[newLength-3] = '%';
-			newLength-=3;
-		}
-		else
-		{
-			newStr[newLength-1] = str[i];
-			newLength--;
-		}
-	}
->>>>>>> 231aada596112e7d62583bef1b008ea64f59cfb7
+String compressBetter(String str) {
+	//Check if compression would create a longer string
+	int size = countCompression(str);
+	if(size>=str.length())
+		return str;
 }
+
+StringBuffer mystr = new StringBuffer();
+char last = str.charAt(0);
+int count = 1;
+for(int i=1; i<str.length(); i++) {
+	if(str.charAt(i)==last)
+		count++;
+	else {
+		mystr.append(last);
+		mystr.append(count);
+		last = str.charAt(i);
+		count = 1;
+	}
+}
+
+//deal with end repeated characters
+mystr.append(last);
+mystr.append(count);
+return mystr.toString();
+
+int countCompression(String str) {
+	if(str==null || str.isEmpty())
+		return 0;
+	char last = str.charAt(0);
+	int size = 0;
+	int count = 1;
+	//get length of a compression string
+	for(int i=1; i<str.length(); i++) {
+		if(str.charAt(i)==last)
+			count++;
+		else {
+			last = str.charAt(i);
+			size+=1+String.valueOf(count).length();
+			count = 1;
+		}
+	}
+	size+=1+String.valueOf(count).length();
+	return size;
+}
+
+O(n) O(n)
