@@ -1,54 +1,26 @@
-<<<<<<< HEAD
-1 如果是二叉查找树 如果node1.val<root.val<node2.val 返回root
+Find in-order successor
 
-否则如果node1.val, node2.val都小于root.val 或 node1.val, node2.val都大于root.val 递归
+public TreeNode inorderSuccessor(TreeNode p) {
+	if(p==null)
+		return null;
 
-直到找到一点大于其中一点的val 小于另一点的val 返回此点
-
-2 如果节点有父指针 trace p and q paths up until they intersect
-
-3 No parent link
-
-
-public TreeNode commonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-	if(isCover(root.left, p) && isCover(root.left, q))
-		return commonAncestor(root.left, p, q);
-	if(isCover(root.right, p) && isCover(root.right, q))
-		return commonAncestor(root.right, p, q);
-	return root;
+	//if has right child, return leftmost node of right subtree
+	if(p.right!=null)
+		return leftMostChild(p.right);
+	else {	//if does not have right child, keeping going up until it is parent's left subtree
+		TreeNode parent = p.parent;
+		while(parent!=null && parent.left!=p) {
+			p = parent;
+			parent = parent.parent;
+		}
+		return parent;
+	}
 }
 
-public boolean isCover(TreeNode root, TreeNode node) {
-	if(root==null)
-		return false;
-	if(root==node)
-		return true;
-	return isCover(root.left, node) || isCover(root.right, node);
-=======
-1 如果是二叉查找树 如果node1.val<root.val<node2.val 返回root
-
-否则如果node1.val, node2.val都小于root.val 或 node1.val, node2.val都大于root.val 递归
-
-直到找到一点大于其中一点的val 小于另一点的val 返回此点
-
-2 如果节点有父指针 trace p and q paths up until they intersect
-
-3 No parent link
-
-
-public TreeNode commonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-	if(isCover(root.left, p) && isCover(root.left, q))
-		return commonAncestor(root.left, p, q);
-	if(isCover(root.right, p) && isCover(root.right, q))
-		return commonAncestor(root.right, p, q);
-	return root;
-}
-
-public boolean isCover(TreeNode root, TreeNode node) {
-	if(root==null)
-		return false;
-	if(root==node)
-		return true;
-	return isCover(root.left, node) || isCover(root.right, node);
->>>>>>> 231aada596112e7d62583bef1b008ea64f59cfb7
+public TreeNode leftMostChild(TreeNode p) {
+	if(p==null)
+		return null;
+	while(p.left!=null)
+		p = p.left;
+	return p;
 }

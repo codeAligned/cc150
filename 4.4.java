@@ -1,76 +1,37 @@
-<<<<<<< HEAD
 
-public ArrayList<LinkedList<TreeNode>> LevelList(TreeNode root) {
-	int level = 0;
-	ArrayList<LinkedList<TreeNode>> res = new ArrayList<LinkedList<TreeNode>>();
 
-	if(root==null)
-		return res;
-
-	LinkedList list = new LinkedList();
-	list.add(root);
-	res.add(list);
-
-	while(true)
-	{
-		LinkedList l = new LinkedList();
-		for(int i=0; i<res.get(level).size(); i++)
-		{
-			TreeNode n = res.get(level).get(i);
-			if(n!=null)
-			{
-				if(n.left!=null)
-					l.add(n.left);
-				if(n.right!=null)
-					l.add(n.right);
-			}
+public List<List<TreeNode>> LevelList(TreeNode root) {
+	List<List<TreeNode>> res = new Arraylist<List<TreeNode>>();
+	Queue<TreeNode> queue = new LinkedList<TreeNode>();
+	List<TreeNode> tmp = new ArrayList<TreeNode>();
+	if(root!=null) {
+		queue.add(root);
+		tmp.add(root);
+	}
+	res.add(tmp);
+	int currLevel = 1, nextLevel = 0;
+	while(!queue.isEmpty()) {
+		TreeNode curr = queue.poll();
+		currLevel--;
+		if(curr.left!=null) {
+			queue.add(curr.left);
+			tmp.add(curr.left);
+			nextLevel++;
 		}
-		if(l!=null)
-			res.add(l);
-		else
-			break;
-		level++;
+		if(curr.right!=null) {
+			queue.add(curr.right);
+			tmp.add(curr.right);
+			nextLevel++;
+		}
+		if(currLevel==0) {
+			currLevel = nextLevel;
+			nextLevel = 0;
+			res.add(tmp);
+		}
 	}
 	return res;
 }
 
+O(n) O(n)
 
-=======
-
-public ArrayList<LinkedList<TreeNode>> LevelList(TreeNode root) {
-	int level = 0;
-	ArrayList<LinkedList<TreeNode>> res = new ArrayList<LinkedList<TreeNode>>();
-
-	if(root==null)
-		return res;
-
-	LinkedList list = new LinkedList();
-	list.add(root);
-	res.add(list);
-
-	while(true)
-	{
-		LinkedList l = new LinkedList();
-		for(int i=0; i<res.get(level).size(); i++)
-		{
-			TreeNode n = res.get(level).get(i);
-			if(n!=null)
-			{
-				if(n.left!=null)
-					l.add(n.left);
-				if(n.right!=null)
-					l.add(n.right);
-			}
-		}
-		if(l!=null)
-			res.add(l);
-		else
-			break;
-		level++;
-	}
-	return res;
-}
-
-
->>>>>>> 231aada596112e7d62583bef1b008ea64f59cfb7
-Note: 这题扩展看leetcode populating next right
+Note: 还是层序遍历 这题扩展看leetcode populating next right
