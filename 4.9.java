@@ -23,19 +23,19 @@ public void findSum(TreeNode node, int sum, int[] path, int level) {
 	if(node==null)
 		return;
 
-	path[level] = node.data;
+	path[level] = node.data;	//insert current node into path
 
 	int tmp = 0;
-	for(int i=level; i>=0; i--) {
+	for(int i=level; i>=0; i--) {	//look for paths with a sum that ends at this node
 		tmp+=path[i];
 		if(tmp==sum)
 			print(path, i, level);
 	}
 
-	findSum(node.left, sum, path, level+1);
+	findSum(node.left, sum, path, level+1);		//search nodes beneath this one
 	findSum(node.right, sum, path, level+1);
 
-	path[level] = Integer.MIN_VALUE;
+	path[level] = Integer.MIN_VALUE;	//remove current node from path
 }
 
 public static void print(int[] path, int start, int end) {
